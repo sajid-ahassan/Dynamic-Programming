@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+#define endl '\n'
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first > b.first;
+    return a.second < b.second;
+}
+int mod = 1e6 + 9;
+int ct = 0;
+
+void solve()
+{
+}
+
+int fnd(int n, vector<int> &arr, vector<int> &dp)
+{
+    if (n == 0)
+        return 0;
+    if (dp[n] != -1)
+        return dp[n];
+    int lft = fnd(n - 1, arr, dp) + abs(arr[n] - arr[n - 1]);
+    int rt = INT_MAX;
+    if (n > 1)
+        rt = fnd(n - 2, arr, dp) + abs(arr[n] - arr[n - 2]);
+    return dp[n] = min(lft, rt);
+}
+signed main()
+{
+    optimize();
+    int n;
+    cin >> n;
+    vector<int> cost(n), dp(n + 1, -1);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> cost[i];
+    }
+    cout << fnd(n - 1, cost, dp) << endl;
+
+    return 0;
+}
