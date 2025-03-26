@@ -50,13 +50,13 @@ signed main()
 
     //Tablulization
     vector<int> cost(n), dp(n + 1, -1);
-     dp[0] = 0;
+    dp[0] = 0;
     for (int i = 1; i < n; i++)
     {
-        int l = abs(arr[i] - dp[i - 1]);
+        int l = dp[i - 1] + abs(arr[i] - arr[i - 1]);
         int r = INT_MAX;
         if (i > 1)
-            r = abs(dp[i - 2] - arr[i]);
+            r = dp[i - 2] + abs(arr[i - 2] - arr[i]);
         dp[i] = min(l, r);
     }
     cout << dp[n - 1] << endl;
