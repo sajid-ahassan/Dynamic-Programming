@@ -47,5 +47,18 @@ signed main()
     }
     cout << fnd(n - 1, cost, dp) << endl;
 
+
+    //Tablulization
+    vector<int> cost(n), dp(n + 1, -1);
+     dp[0] = 0;
+    for (int i = 1; i < n; i++)
+    {
+        int l = abs(arr[i] - dp[i - 1]);
+        int r = INT_MAX;
+        if (i > 1)
+            r = abs(dp[i - 2] - arr[i]);
+        dp[i] = min(l, r);
+    }
+    cout << dp[n - 1] << endl;
     return 0;
 }
