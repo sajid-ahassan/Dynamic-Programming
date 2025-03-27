@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+#define endl '\n'
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first < b.first;
+    return a.second < b.second;
+}
+
+int mod = 1e6 + 9;
+int ct = 0;
+void solve()
+{
+}
+int fnd(vector<vector<int>> &arr, vector<vector<int>> &dp, int i, int j, int n)
+{
+    if (i == n)
+        return arr[i][j];
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    int l = arr[i][j] + fnd(arr, dp, i + 1, j, n);
+    int r = arr[i][j] + fnd(arr, dp, i + 1, j + 1, n);
+    return dp[i][j] = min(l, r);
+}
+
+signed main()
+{
+    optimize();
+    int n;
+    cin >> n;
+    vector<vector<int>> arr(n, vector<int>(n));
+    vector<vector<int>> dp(n, vector<int>(n, -1));
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < i + 1; j++)
+        {
+            cin >> arr[i][j];
+        }
+    }
+    cout << fnd(arr, dp, 0, 0, n - 1) << endl;
+    return 0;
+}
