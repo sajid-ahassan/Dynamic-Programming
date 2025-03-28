@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+#define endl '\n'
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first < b.first;
+    return a.second < b.second;
+}
+
+int mod = 1e6 + 9;
+int ct = 0;
+void solve()
+{
+}
+int fnd(vector<int> &arr, vector<vector<int>> &dp, int n, int k)
+{
+    if (k == 0)
+        return 1;
+    if (n < 0)
+        return 0;
+    if (dp[n][k] != -1)
+        return dp[n][k];
+    int r = fnd(arr, dp, n - 1, k);
+    int
+        l = fnd(arr, dp, n - 1, k - arr[n]);
+    return dp[n][k] = l + r;
+}
+signed main()
+{
+    optimize();
+    int n, k;
+    cin >> n >> k;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    vector<vector<int>> dp(n, vector<int>(k + 1, 0));
+    for (int i = 0; i < n; i++)
+    {
+        dp[i][0] = 1;
+    }
+    if (arr[0] <= k)
+        dp[0][arr[0]] += 1;
+    for (int i = 1; i < n; i++)
+    {
+        for (int tar = 0; tar <= k; tar++)
+        {
+            int l = dp[i - 1][tar];
+            int r = 0;
+            if (arr[i] <= tar)
+                r = dp[i - 1][tar - arr[i]];
+            dp[i][tar] = l + r;
+        }
+    }
+    cout << dp[n - 1][k] << endl;
+
+    return 0;
+}
