@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+#define endl '\n'
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first < b.first;
+    return a.second < b.second;
+}
+
+int mod = 1e6 + 9;
+int ct = 0;
+void solve()
+{
+}
+
+signed main()
+{
+    optimize();
+    int n, w;
+    cin >> n >> w;
+    vector<pair<int, int>> arr(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i].first >> arr[i].second;
+    }
+    vector<vector<int>> dp(n, vector<int>(w + 1, 0));
+
+    for (int i = arr[0].first; i <= w; i++)
+    {
+        dp[0][i] = arr[0].second;
+    }
+    for (int i = 1; i < n; i++)
+    {
+        for (int wi = 0; wi <= w; wi++)
+        {
+            int not_take = 0 + dp[i - 1][wi];
+            int take = INT_MIN;
+            if (arr[i].first <= wi)
+                take = arr[i].second + dp[i - 1][wi - arr[i].first];
+            dp[i][wi] = max(take, not_take);
+        }
+    }
+    cout << dp[n - 1][w] << endl;
+    return 0;
+}
