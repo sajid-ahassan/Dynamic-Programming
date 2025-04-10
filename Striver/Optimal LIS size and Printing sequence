@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+// #define endl '\n'
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first > b.first;
+    return a.second < b.second;
+}
+
+int mod = 1e6 + 9;
+
+void solve()
+{
+}
+
+signed main()
+{
+    optimize();
+    int n;
+    cin>>n;
+    vector<int>a(n),parent(n,-1),ind(n);
+    vector<int>lis;
+    for (int i = 0; i < n; i++)
+    {
+        cin>>a[i];
+        int it = lower_bound(all(lis),a[i])-lis.begin();
+        if(it == lis.size())
+        {
+            lis.push_back(a[i]);
+            ind[lis.size()-1] = i;
+            parent[i] = (lis.size() == 1 ? -1 : ind[it-1]);
+        }
+        else{
+            lis[it] = a[i];
+            ind[it] = i;
+            parent[i] = (it = 0 ? -1:ind[it-1]);
+        }
+    }
+    deque<int>LIS;
+    LIS.push_front(lis.back());
+    auto it = ind[lis.size()-1];
+    while (parent[it] != -1)
+    {
+        it = parent[it];
+        LIS.push_front(a[it]);
+    }
+    cout<<gsize(LIS)<<endl;
+    for (int i = 0; i < gsize(LIS); i++)
+    {
+        cout<<LIS[i]<<' ';
+    }
+    cout<<endl;
+    return 0;
+}
