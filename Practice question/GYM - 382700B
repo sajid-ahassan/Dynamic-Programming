@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) ++(x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+
+// #define endl '\n'
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first > b.first;
+    return a.second < b.second;
+}
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+const int mod = 1e9;
+void print(int n)
+{
+    if (n == 0)
+        return;
+    print(n - 1);
+    cout << n << endl;
+}
+signed main()
+{
+    optimize();
+    int n;
+    cin >> n;
+    print(n);
+
+    return 0;
+}
