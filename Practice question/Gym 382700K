@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(x) (x).begin(), (x).end()
+#define allr(x) (x).rbegin(), (x).rend()
+#define gsize(x) (int)((x).size())
+#define int long long
+
+#define endl '\n'
+bool comparePairs(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first != b.first)
+        return a.first > b.first;
+    return a.second < b.second;
+}
+#define optimize()                \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0);
+const int mod = 1e9;
+
+int sum = 0;
+int ans = INT_MIN;
+
+void fnd(vector<vector<int>> &arr, int i, int j, int sum, int n, int m)
+{
+    if (i >= n || j >= m)
+        return;
+    sum += arr[i][j];
+    if (n - 1 == i && m - 1 == j)
+    {
+        ans = max(ans, sum);
+        return;
+    }
+    fnd(arr, i, j + 1, sum, n, m);
+    fnd(arr, i + 1, j, sum, n, m);
+}
+signed main()
+{
+    optimize();
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> arr(n, vector<int>(m));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> arr[i][j];
+    fnd(arr, 0, 0, sum, n, m);
+    cout << ans << endl;
+
+    return 0;
+}
